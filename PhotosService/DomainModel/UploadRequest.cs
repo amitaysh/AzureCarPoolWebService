@@ -1,5 +1,6 @@
 ﻿namespace PhotosService.DomainModel
 {
+    // upload data to blob request class
     public class UploadRequest
     {
         public string PhotoName { get; set; }

@@ -18,6 +18,7 @@ namespace PhotosService.WebControllers
         [HttpPost("{name}")]
         public async Task<IActionResult> UploadPhoto(IFormFile photo, string name)
         {
+            // verify the file is not empty and is in expected type (list of image files above)
             if (photo == null || photo.Length == 0 || !(_imageExtensions.Contains(Path.GetExtension(photo.FileName).ToUpperInvariant())))
             {
                 return BadRequest("Invalid file");
@@ -42,7 +43,7 @@ namespace PhotosService.WebControllers
             {
                 var blobData = await _photoService.GetPhotoAsync(name);
 
-                // Return the file response
+                // Return the file response, convert the stream to file
                 return File(blobData.DownloadInfo, blobData.FileType, blobData.FileName);
             }
             catch (Exception ex)

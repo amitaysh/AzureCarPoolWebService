@@ -11,6 +11,7 @@ namespace GarageService.Services
             _garageRepository = garageRepository;
         }
 
+        // Digest messages from service bus to create new garage requests
         public async Task DigestMessage(Guid requestCarId, Guid requestUserId)
         {
             var garage = new Request
@@ -22,9 +23,20 @@ namespace GarageService.Services
             await _garageRepository.AddGarageRequestAsync(garage);
         }
 
+        // Get all garage requests
         public async Task<List<Request>> GetAllGarageRequestsAsync()
         {
             return await _garageRepository.GetAllGarageRequestsAsync();
+        }
+
+        public async Task<List<Request>> GetRequestsByCarIdAsync(string carId)
+        {
+            return await _garageRepository.GetRequestsByCarIdAsync(carId);
+        }
+
+        public async Task<List<Request>> GetRequestsByUserIdAsync(string userId)
+        {
+            return await _garageRepository.GetRequestsByUserIdAsync(userId);
         }
     }
 }

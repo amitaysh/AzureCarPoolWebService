@@ -21,21 +21,22 @@ namespace GarageService.ServiceBus
             _garageService = garageService;
         }
 
+        // Start the Service Bus receiver to listen for new assignment messages
         public void StartServiceBusReceiver(CancellationToken cancellationToken)
         {
-            // Start the Service Bus receiver to listen for new assignment messages
             _newAssignmentProcessor.ProcessMessageAsync += ProcessNewAssignmentMessages;
             _newAssignmentProcessor.ProcessErrorAsync += ProcessServiceBusErrorAsync;
             _newAssignmentProcessor.StartProcessingAsync(cancellationToken).GetAwaiter().GetResult();
         }
 
+        // Stop the Service Bus receiver
         public async Task StopServiceBusReceiverAsync(CancellationToken cancellationToken)
         {
-            // Stop the Service Bus receiver
             await _newAssignmentProcessor.StopProcessingAsync(cancellationToken);
             await _newAssignmentProcessor.DisposeAsync();
         }
 
+        // Process messages to create new request
         private async Task ProcessNewAssignmentMessages(ProcessMessageEventArgs args)
         {
             string messageBody = args.Message.Body.ToString();
@@ -46,9 +47,9 @@ namespace GarageService.ServiceBus
             await args.CompleteMessageAsync(args.Message);
         }
 
+        // Handle any errors that occur during message processing
         private Task ProcessServiceBusErrorAsync(ProcessErrorEventArgs args)
         {
-            // Handle any errors that occur during message processing
             Console.WriteLine($"Service Bus message processing error: {args.Exception}");
             return Task.CompletedTask;
         }

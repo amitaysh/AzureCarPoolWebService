@@ -45,6 +45,7 @@ namespace TransactionsService
                 return new TransactionRepository(cosmosClient, databaseName, containerName);
             });
 
+            // register services to DI
             services.AddSingleton<ITransactionService, TransactionService>();
             services.AddSingleton<IServiceBusListener, ServiceBusListener>();
             services.AddSingleton<IServiceBusPublisher, ServiceBusPublisher>();
@@ -71,7 +72,7 @@ namespace TransactionsService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - development
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transaction Service APIs");
                 });
             }
@@ -79,7 +80,7 @@ namespace TransactionsService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - production
                     c.SwaggerEndpoint("/TransactionService/swagger/v1/swagger.json", "Transaction Service APIs");
                 });
             }
@@ -95,6 +96,7 @@ namespace TransactionsService
 
     public static class AppExtension
     {
+        // Start service bus listener
         public static void StartServiceBusListener(this IApplicationBuilder app)
         {
             var sb = app.ApplicationServices.GetService<IServiceBusListener>();

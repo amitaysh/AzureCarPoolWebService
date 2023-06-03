@@ -1,5 +1,6 @@
 ﻿namespace TransactionsService.DTO
 {
+    // create transaction request class
     public class CreateTransaction
     {
         public Guid CarId { get; set; }

@@ -20,11 +20,13 @@ namespace ManagementService
         {
             services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme).AddCertificate();
 
+            // set entity framework sql connection string
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(_configuration.GetConnectionString("SQL"));
             });
 
+            // register services to DI
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICarService, CarService>();
@@ -48,7 +50,7 @@ namespace ManagementService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - development
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Management Service APIs");
                 });
             }
@@ -56,7 +58,7 @@ namespace ManagementService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - production
                     c.SwaggerEndpoint("/ManagementService/swagger/v1/swagger.json", "Management Service APIs");
                 });
             }

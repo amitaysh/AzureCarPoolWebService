@@ -12,6 +12,7 @@ namespace TransactionsService.ServiceBus
         private readonly ServiceBusProcessor _closeTransactionProcessor;
         private readonly ITransactionService _transactionService;
 
+        // service bus ctor, topic and queue listeners
         public ServiceBusListener(IConfiguration configuration, ITransactionService transactionService)
         {
             var serviceBusConnectionString = configuration.GetConnectionString("ServiceBusConnection");
@@ -37,15 +38,16 @@ namespace TransactionsService.ServiceBus
             _closeTransactionProcessor.StartProcessingAsync(cancellationToken).GetAwaiter().GetResult();
         }
 
+        // Stop the Service Bus receiver
         public async Task StopServiceBusReceiverAsync(CancellationToken cancellationToken)
         {
-            // Stop the Service Bus receiver
             await _newAssignmentProcessor.StopProcessingAsync(cancellationToken);
             await _newAssignmentProcessor.DisposeAsync();
             await _closeTransactionProcessor.StopProcessingAsync(cancellationToken);
             await _closeTransactionProcessor.DisposeAsync();
         }
 
+        // process messages of new assignment topic
         private async Task ProcessNewAssignmentMessages(ProcessMessageEventArgs args)
         {
             string messageBody = args.Message.Body.ToString();
@@ -56,6 +58,7 @@ namespace TransactionsService.ServiceBus
             await args.CompleteMessageAsync(args.Message);
         }
 
+        // process messages of close transaction requests from queue
         private async Task ProcessCloseTransactionMessages(ProcessMessageEventArgs args)
         {
             string messageBody = args.Message.Body.ToString();
@@ -66,9 +69,9 @@ namespace TransactionsService.ServiceBus
             await args.CompleteMessageAsync(args.Message);
         }
 
+        // Handle any errors that occur during message processing
         private Task ProcessServiceBusErrorAsync(ProcessErrorEventArgs args)
         {
-            // Handle any errors that occur during message processing
             Console.WriteLine($"Service Bus message processing error: {args.Exception}");
             return Task.CompletedTask;
         }

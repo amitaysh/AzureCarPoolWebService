@@ -28,6 +28,30 @@ namespace TransactionsService.WebControllers
             return Ok(transactions);
         }
 
+        [HttpGet("GetOpen")]
+        [SwaggerOperation("GetAllOpenTransactions")]
+        public async Task<ActionResult<List<Transaction>>> GetAllOpenTransactionsAsync()
+        {
+            var transactions = _mapper.Map<List<Transaction>>(await _transactionService.GetAllOpenTransactionsAsync());
+            return Ok(transactions);
+        }
+
+        [HttpGet("GetByCar/{carId}")]
+        [SwaggerOperation("GetTransactionsByCarId")]
+        public async Task<ActionResult<List<Transaction>>> GetTransactionsByCarIdAsync(string carId)
+        {
+            var transactions = _mapper.Map<List<Transaction>>(await _transactionService.GetTransactionsByCarIdAsync(carId));
+            return Ok(transactions);
+        }
+
+        [HttpGet("GetByUser/{userId}")]
+        [SwaggerOperation("GetTransactionsByUserId")]
+        public async Task<ActionResult<List<Transaction>>> GetTransactionsByUserIdAsync(string userId)
+        {
+            var transactions = _mapper.Map<List<Transaction>>(await _transactionService.GetTransactionsByUserIdAsync(userId));
+            return Ok(transactions);
+        }
+
         [HttpGet("{transactionId}")]
         [SwaggerOperation("GetTransactionById")]
         public async Task<ActionResult<Transaction>> GetTransactionByIdAsync(string transactionId)
@@ -47,7 +71,7 @@ namespace TransactionsService.WebControllers
             return _mapper.Map<Transaction>(await _transactionService.AddTransactionAsync(dmTransaction));
         }
 
-        [HttpPut("/CloseTransaction")]
+        [HttpPut("CloseTransaction")]
         [SwaggerOperation("CloseTransaction")]
         public async Task CloseTransactionAsync(CloseTransaction closeTransaction)
         {

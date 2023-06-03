@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSwaggerGen(c =>
 {
-    // Define the first Swagger document
+    // Define the Swagger document
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",

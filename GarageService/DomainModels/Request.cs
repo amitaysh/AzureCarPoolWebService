@@ -1,5 +1,6 @@
 ﻿namespace GarageService.DomainModels
 {
+    // Request class handles requests received from other services to inform garage about a car request
     public class Request
     {
         public string Id { get; set; }

@@ -24,6 +24,7 @@ namespace PhotosService
                 return new BlobStorageRepository(cosmosConnectionString, containerName);
             });
 
+            // register services to DI
             services.AddSingleton<IPhotoService, PhotoService>();
 
             services.AddAuthentication(
@@ -40,7 +41,7 @@ namespace PhotosService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - development
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Photo Service APIs");
                 });
             }
@@ -48,7 +49,7 @@ namespace PhotosService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - production
                     c.SwaggerEndpoint("/PhotosService/swagger/v1/swagger.json", "Photo Service APIs");
                 });
             }

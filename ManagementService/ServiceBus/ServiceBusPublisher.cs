@@ -20,6 +20,7 @@ namespace ManagementService.ServiceBus
 
         }
 
+        // publish message to service bus topic upon new assignment of user and car
         public async Task PublishNewAssignment(AssignCarUser newAssignment)
         {
             // Publish the new assignment to the Service Bus
@@ -28,6 +29,7 @@ namespace ManagementService.ServiceBus
             await _newAssignmentPublisher.SendMessageAsync(message);
         }
 
+        // publish message to service bus queue upon returning a car (closing transaction)
         public async Task PublishCloseTransaction(CloseTransaction closeTransaction)
         {
             // Publish the close transaction to the Service Bus

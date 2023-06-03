@@ -11,5 +11,8 @@ namespace TransactionsService.Services
         Task<Transaction> AddTransactionAsync(Transaction transaction);
         Task<List<Transaction>> GetTransactionsAsync();
         Task<Transaction> GetTransactionByIdAsync(string transactionId);
+        Task<List<Transaction>> GetTransactionsByUserIdAsync(string userId);
+        Task<List<Transaction>> GetTransactionsByCarIdAsync(string carId);
+        Task<List<Transaction>> GetAllOpenTransactionsAsync();
     }
 }

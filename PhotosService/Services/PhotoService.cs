@@ -8,11 +8,13 @@ namespace PhotosService.Services
     {
         private readonly IBlobStorageRepository _blobStorageRepository;
 
+        // photo service ctor
         public PhotoService(IBlobStorageRepository blobStorageRepository)
         {
             _blobStorageRepository = blobStorageRepository;
         }
 
+        // upload photo to blob
         public async Task<string> UploadPhotoAsync(IFormFile photo, string name)
         {
             var uploadRequet = new UploadRequest
@@ -22,6 +24,7 @@ namespace PhotosService.Services
                 PhotoName = name,
                 FileSteam = new MemoryStream()
             };
+            // convert photo to stream
             await photo.CopyToAsync(uploadRequet.FileSteam);
             uploadRequet.FileSteam.Position = 0;
 
@@ -29,11 +32,13 @@ namespace PhotosService.Services
             return photoUrl;
         }
 
+        // get photo from blob
         public async Task<DownloadData> GetPhotoAsync(string name)
         {
             return await _blobStorageRepository.GetPhotoAsync(name);
         }
 
+        // delete photo from blob
         public async Task DeletePhotoAsync(string name)
         {
             await _blobStorageRepository.DeletePhotoAsync(name);

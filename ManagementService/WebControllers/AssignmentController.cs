@@ -38,7 +38,7 @@ namespace Managements.WebControllers
         /// Get a car by User ID
         /// </summary>
         /// <param name="userId">The ID of the user</param>
-        [HttpGet("/ByUserId/{userId}")]
+        [HttpGet("ByUserId/{userId}")]
         [SwaggerOperation(Summary = "Get a car by user ID", Description = "Retrieve a car by user ID")]
         public async Task<ActionResult<Car>> GetCarByIdAsync(Guid userId)
         {
@@ -53,7 +53,7 @@ namespace Managements.WebControllers
         /// Get a user by car ID
         /// </summary>
         /// <param name="carId">The ID of the car</param>
-        [HttpGet("/ByCarId{carId}")]
+        [HttpGet("ByCarId{carId}")]
         [SwaggerOperation(Summary = "Get a user by car ID", Description = "Retrieve a user by car ID")]
         public async Task<ActionResult<User>> GetUserByIdAsync(Guid carId)
         {
@@ -68,7 +68,7 @@ namespace Managements.WebControllers
         /// Assign car and user
         /// </summary>
         /// <param name="assignCarUser">The car to add</param>
-        [HttpPost("/AssignCarUser")]
+        [HttpPost("AssignCarUser")]
         [SwaggerOperation(Summary = "Assign car and user", Description = "Assign car and user")]
         public async Task<IActionResult> AssignCarUserAsync(AssignCarUser assignCarUser)
         {
@@ -87,7 +87,7 @@ namespace Managements.WebControllers
         /// Clear assignment by car id
         /// </summary>
         /// <param name="carId">The car id</param>
-        [HttpPost("/ClearByCarId/{clearByCarId}")]
+        [HttpPost("ClearByCarId/{clearByCarId}")]
         [SwaggerOperation(Summary = "Clear assignment by car id", Description = "Clear assignment by car id")]
         public async Task<IActionResult> ClearAssignmentByCarIdAsync(Guid clearByCarId)
         {
@@ -107,7 +107,7 @@ namespace Managements.WebControllers
         /// Clear assignment by user id
         /// </summary>
         /// <param name="userId">The user id</param>
-        [HttpPost("/ClearByUserId/{clearByUserId}")]
+        [HttpPost("ClearByUserId/{clearByUserId}")]
         [SwaggerOperation(Summary = "Clear assignment by user id", Description = "Clear assignment by user id")]
         public async Task<IActionResult> ClearAssignmentByUserIdAsync(Guid clearByUserId)
         {

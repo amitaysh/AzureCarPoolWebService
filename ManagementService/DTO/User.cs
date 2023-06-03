@@ -1,6 +1,7 @@
 ﻿
 namespace ManagementService.DTO
 {
+    // User class
     public class User
     {
         public Guid Id { get; set; }

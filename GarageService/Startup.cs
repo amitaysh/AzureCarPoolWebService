@@ -44,6 +44,7 @@ namespace GarageService
                 return new GarageRepository(cosmosClient, databaseName, containerName);
             });
 
+            // register services to DI
             services.AddSingleton<IGarageService, Services.GarageService>();
             services.AddSingleton<IServiceBusListener, ServiceBusListener>();
 
@@ -51,6 +52,7 @@ namespace GarageService
                 CertificateAuthenticationDefaults.AuthenticationScheme)
                 .AddCertificate();
 
+            // Configure Mapper
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
@@ -69,7 +71,7 @@ namespace GarageService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - development
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Garage Service APIs");
                 });
             }
@@ -77,7 +79,7 @@ namespace GarageService
             {
                 app.UseSwaggerUI(c =>
                 {
-                    // Configure the Swagger UI for each document
+                    // Configure the Swagger UI for each document - production
                     c.SwaggerEndpoint("/GarageService/swagger/v1/swagger.json", "Garage Service APIs");
                 });
             }
@@ -93,6 +95,7 @@ namespace GarageService
 
     public static class AppExtension
     {
+        // Start service bus listener
         public static void StartServiceBusListener(this IApplicationBuilder app)
         {
             var sb = app.ApplicationServices.GetService<IServiceBusListener>();

@@ -8,6 +8,7 @@ namespace TransactionsService.ServiceBus
     {
         private readonly ServiceBusSender _serviceBusSender;
 
+        // service bus publisher to queue ctor
         public ServiceBusPublisher(IConfiguration configuration)
         {
             var serviceBusConnectionString = configuration.GetConnectionString("ServiceBusConnection");
@@ -16,6 +17,7 @@ namespace TransactionsService.ServiceBus
             _serviceBusSender = new ServiceBusClient(serviceBusConnectionString).CreateSender(transactionQueue);
         }
 
+        // publish transaction messages to queue
         public async Task PublishTransaction(Transaction transaction)
         {
             // Publish the transaction to the Service Bus

@@ -1,8 +1,9 @@
 ﻿
 namespace ManagementService.DTO
 {
+    // Update car request
     public class UpdateCar
     {
-        public string PhotoUrl { get; set; }
+        public string PhotoName { get; set; }
     }
 }

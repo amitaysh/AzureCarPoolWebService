@@ -1,6 +1,7 @@
 ﻿
 namespace ManagementService.DomainModels
 {
+    // User class
     public class User
     {
         public Guid Id { get; set; }

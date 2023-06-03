@@ -10,6 +10,7 @@ namespace ManagementService.Services
         private readonly ICarService _carService;
         private readonly IServiceBusPublisher _serviceBusHandler;
 
+        // assignment service ctor
         public AssignmentService(IUserService userService, ICarService carService, IServiceBusPublisher serviceBusHandler)
         {
             _userService = userService;
@@ -17,6 +18,7 @@ namespace ManagementService.Services
             _serviceBusHandler = serviceBusHandler;
         }
 
+        // assign car and user (starting transaction)
         public async Task AssignCarUserAsync(AssignCarUser assignCarUser)
         {
             await _userService.AssignUserToCar(assignCarUser.UserId, assignCarUser.CarId);
@@ -25,6 +27,7 @@ namespace ManagementService.Services
             await _serviceBusHandler.PublishNewAssignment(assignCarUser);
         }
 
+        // clear assignment of car and user by car id (closing transaction)
         public async Task ClearAssignmentByCarIdAsync(Guid clearByCarId)
         {
             var car = await _carService.GetCarByIdAsync(clearByCarId);
@@ -38,6 +41,7 @@ namespace ManagementService.Services
             await PublishCloseTransactionMessage(clearByCarId);
         }
 
+        // clear assignment of car and user by user id (closing transaction)
         public async Task ClearAssignmentByUserIdAsync(Guid clearByUserId)
         {
             var user = await _userService.GetUserByIdAsync(clearByUserId);
@@ -51,6 +55,7 @@ namespace ManagementService.Services
             await PublishCloseTransactionMessage((Guid)user.CarId);
         }
 
+        // private method to publish messages to service bus
         private async Task PublishCloseTransactionMessage(Guid carId)
         {
             var closeTransactionMessage = new CloseTransaction

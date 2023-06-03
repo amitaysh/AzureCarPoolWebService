@@ -1,5 +1,6 @@
 ﻿namespace TransactionsService.DTO
 {
+    // Transaction class
     public class Transaction
     {
         public string Id { get; set; }
